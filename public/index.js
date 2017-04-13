@@ -179,7 +179,7 @@ function Controller(m) {
 		try {
 			return m.snippetArr[snipNum].image;
 		} catch(e) {
-			alert("There is a problem with the quiz questions.");
+			alert("There is a problem with the quiz questions. Perhaps you did not load them into the mongoDB?");
 		}
 	};
 
