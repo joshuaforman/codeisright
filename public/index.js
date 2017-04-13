@@ -14,22 +14,32 @@ function Model () {
 	this.snippetArr = [];
 
 	this.loadData = function (m, categoryStr, showSnippetCallback) {
-		// if (categoryStr == 'languages') {
-		// 	m.snippetArr = shuffle(langSnippets);
-		// } else {
-		// 	m.snippetArr = shuffle(ppdSnippets);
-		// }
-		// showSnippetCallback(0);
 
-		// if you want to pull data from a mongo database, you should comment out the above code, and uncomment this code. You will also need to have a node server running the server.js file in the main directory, and have mongo running locally
+
+		// first check to see if a node server is running on port 8090 (as this code base allows for - see README). If the .get errors, then load the data from the data.js file (which is also included at the bottom of the index.html).
 		$.get("http://localhost:8090/getsnippet2",
 			{
-		   category: categoryStr
-		    },
-		    function(data) {
-		        m.snippetArr = shuffle(JSON.parse(data));
-		        showSnippetCallback(0);
-		    });
+				category: categoryStr
+			},
+			function(data) {
+				m.snippetArr = shuffle(JSON.parse(data));
+				showSnippetCallback(0);
+			}
+		).fail(
+			function(xhr, status, err) {
+				// if there is no node server running, then get the quiz questions from data.js. If there is a problem, alert the user
+				try {
+					if (categoryStr == 'languages') {
+						m.snippetArr = shuffle(langSnippets);
+					} else {
+						m.snippetArr = shuffle(ppdSnippets);
+					}
+					showSnippetCallback(0);
+				} catch (e) {
+					alert("There are no quiz questions loaded.");
+				}
+			}
+		);
 	};
 
 		// copied from: http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
