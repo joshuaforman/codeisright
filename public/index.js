@@ -176,7 +176,11 @@ function Controller(m) {
 	var firstTry = true;
 
 	this.getImgStr = function(snipNum) {
-		return m.snippetArr[snipNum].image;
+		try {
+			return m.snippetArr[snipNum].image;
+		} catch(e) {
+			alert("There is a problem with the quiz questions.");
+		}
 	};
 
 	this.loadData = function (category, showSnippetCallback) {
