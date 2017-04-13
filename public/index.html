@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Welcome to Project trtl!</title>
+	<!-- JQuery CDN -->
+    <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Normalize.css - from Bootstrap website, used for improved cross-browser rendering -->
+	<link rel="stylesheet" type="text/css" href="browsers.css">
+	<!-- Project trtl custom CSS -->
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="csshake-horizontalv2.css">
+    <link rel="stylesheet" type="text/css" href="rotatein.css">
+    <!-- Google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Henny+Penny' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+
+<audio id="themeSong">
+  <source src="themesong.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="wrongAnswer">
+  <source src="losinghorn.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="correctAnswer">
+  <source src="correctding.mp3" type="audio/mpeg">
+</audio>
+
+
+<div class="container">
+
+		<div class="header row">
+			<!-- left side of logo -->
+			<div class="left col-md-2">#</div>
+			<!-- right side of logo -->
+			<div class="right col-md-2">The<br><span>Code</span><br>is<br>Right</div>
+
+			<!-- this is an empty div to keep the buttons lower down a bit more to the left -->
+			<div id="empty1" class="empty col-md-2 pull-right"></div>
+
+			<!-- score box -->
+			<div id="score" class="score-box col-md-2 pull-right">Score: </div>
+
+			<!-- categories dropdown -->
+			<div id="categories" class="dropdown col-md-2 pull-right">
+		  		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		    	Categories
+		    	<span class="caret"></span>
+		  		</button>
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+			    <li id="languages" onclick="view.getSnippets('languages');">HTML/CSS/JavaScript</li>
+
+			    <li id="ppd" onclick="view.getSnippets('ppd');">Pokemon/Prescription Drug/Disease</li>
+			    <!-- <li onclick="view.getSnippets();">Coming Soon: Shakespeare/Chaucer/Dickens</li> -->
+			  </ul>
+			</div> <!-- end categories dropdown -->
+
+			<!-- instructions button -->
+			<button id="tutorial-button" class="btn btn-default col-md-2 pull-right" type="submit">Instructions</button>
+
+			<!-- level dropdown -->
+			<!-- <div class="dropdown col-md-2">
+		  		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		    	Level
+		    	<span class="caret"></span>
+		  		</button>
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+			    <li>1</li>
+			    <li>2</li>
+			    <li>3</li>
+			  </ul>
+			</div> -->
+		</div> <!-- end header row -->
+</div>
+
+<div id="snippetContainer" class="whitespace test1">
+	<div id="dragSnip" class="snippet animated rotateIn" draggable="true" ondragstart="view.drag(event)"></div>
+</div>
+
+
+<div class="container">
+
+		<!-- Tutorial Modal -->
+		<div id="tutorialModal" class="modal">
+			<div class="modal-content">
+				<span id="start" class="close">x</span>
+
+				<p class="tutorial-header">Come on down!!!</p>
+
+				<p class="come-down">You're the next contestant on <span class="game-name">The Code is Right!</span> </p><br>
+				<p>This game helps you to test your knowledge of programming concepts and languages. To play:<br><br>
+				<ul>
+					<li>Choose from the "Categories" Dropdown</li>
+					<li>Drag the snippet that appears into the correct bucket</li>
+				</ul>
+				<br>
+					Earn points by matching the snippet to the correct category on the first try.</p>
+
+				<p class="tutorial-footer">Good luck!</p>
+
+			</div>
+		</div>
+
+		<!-- Game Over Modal -->
+		<div id="gameOverModal" class="modal">
+			<div class="modal-content">
+				<span id="stop" class="close">x</span>
+
+				<p class="gameOver-header">Great Job!!!</p><br>
+
+				<p id="score-message">You got <span id="final-score"><strong></strong></span> right on the first try!</p>
+
+				<p class="come-down">Choose another category and continue the fun!</p><br>
+
+				<p class="tutorial-footer">Good luck!</p>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div id="bucket1" class="col-md-4 bucket bucket1" ondrop="view.drop(event)" ondragover="view.allowDrop(event)">
+			</div>
+
+			<div id="bucket2" class="col-md-4 bucket bucket2" ondrop="view.drop(event)" ondragover="view.allowDrop(event)">
+			</div>
+
+			<div id="bucket3" class="col-md-4 bucket bucket3" ondrop="view.drop(event)" ondragover="view.allowDrop(event)">
+			</div>
+
+		</div>
+</div>
+
+<script src="data.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
+
+
