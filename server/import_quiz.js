@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const async = require('async');
-const SnippetSchema = require('../snippet.schema.js');
+const SnippetSchema = require('./snippet.schema.js');
 const Snippet = mongoose.model('Snippet', SnippetSchema);
 
 // connect to localhost mongod process
